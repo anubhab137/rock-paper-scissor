@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+</html>
+
+<script>
+    function computerPlay(){
+        let ar=["rock","paper","scissor"]
+        let i=Math.floor(Math.random()*3)
+        return ar[i];
+    }
+    function playRound(playerSelection,computerSelection){
+        if(playerSelection==="rock" && computerSelection==="paper")
+            return 0;
+        if(playerSelection==="paper" && computerSelection==="scissor")    
+            return 0;
+        if(playerSelection==="scissor" && computerSelection==="rock")
+            return 0;
+        else
+            return 1;    
+    }
+    function string(str){
+        return ((str.toUpperCase())[0]+str.toLowerCase().slice(1))
+    }
+
+    function input(){
+        let i=(window.prompt('Enter your choice between Rock, Paper & Scissor')).toLowerCase();
+        let c=computerPlay();
+        while(c===i){
+            c=computerPlay();
+        }
+        let res=playRound(i,c);
+        
+        if (res===0)
+            console.log(`You Lose! ${string(c)} beats ${string(i)}`);
+        else
+            console.log(`You Win! ${string(i)} beats ${string(c)}`);
+        return res;    
+    }
+    function game(){
+        let i=0;
+        let res=0;
+        
+        while(i<5){
+            res=res+input();
+            i++;
+        }
+        if(res>2)
+            console.log("You Won!")
+        else
+            console.log("You Lose")    
+
+
+    }
+</script>
