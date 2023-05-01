@@ -9,6 +9,8 @@ const aiScoreEle = document.querySelector("#ai-score-upd");
 const winner = document.querySelector(".win-upd");
 
 rock.addEventListener('click',()=>{
+    winner.textContent  = "";
+
     let manScore = +manScoreEle.textContent;
     let aiScore = +aiScoreEle.textContent;
 
@@ -40,6 +42,8 @@ rock.addEventListener('click',()=>{
 });
 
 paper.addEventListener('click',()=>{
+    winner.textContent  = "";
+
     let manScore = +manScoreEle.textContent;
     let aiScore = +aiScoreEle.textContent;
 
@@ -71,6 +75,8 @@ paper.addEventListener('click',()=>{
 });
 
 scissor.addEventListener('click',()=>{
+    winner.textContent  = "";
+    
     let manScore = +manScoreEle.textContent;
     let aiScore = +aiScoreEle.textContent;
 
