@@ -1,8 +1,5 @@
-const ar = ["Rock","Paper","Scissor"];
 
-const rock = document.querySelector("#rock");
-const paper = document.querySelector("#paper");
-const scissor = document.querySelector("#scissor");
+const btns = document.querySelectorAll('.btns');
 const roundWin = document.querySelector("#round")
 const manScoreEle = document.querySelector("#y-score-upd");
 const aiScoreEle = document.querySelector("#ai-score-upd");
@@ -10,101 +7,74 @@ const winner = document.querySelector(".win-upd");
 const playAgain = document.querySelector(".play-again");
 playAgain.style.display = 'none';
 
-rock.addEventListener('click',()=>{
-    winner.textContent  = "";
-
-    let manScore = +manScoreEle.textContent;
-    let aiScore = +aiScoreEle.textContent;
-
+function compPlay(){
+    const ar = ["rock","paper","scissor"];
     let rand = Math.floor(Math.random()*3);
     const aiChoice = ar[rand];
+    return aiChoice;
+}
 
-    if(aiChoice == "Rock") roundWin.textContent = "It's a tie";
-    else if(aiChoice == "Paper"){
-        roundWin.textContent = "Alas! You lost this round";
-        aiScore += 1;
-        aiScoreEle.textContent = aiScore;
-    } 
+
+function play(manChoice, aiChoice){
+    if(manChoice === aiChoice){
+        return 0;
+    }
     else{
-        roundWin.textContent = "Congo! You win this round";
-        manScore +=1;
-        manScoreEle.textContent = manScore;
+        if(manChoice === "rock"){
+            if(aiChoice === "paper") return -1;
+            else return 1;
+        }
+        else if(manChoice === "paper"){
+            if(aiChoice === "scissor") return -1;
+            else return 1;
+        }
+        else{
+            if(aiChoice === "rock") return -1;
+            else return 1;
+        }
     }
+}
 
-    if(aiScore == 5){
-        winner.textContent = "Defeat! AI wins the war over humanity and starts ruling the world";
-    }
-    if(manScore == 5){
-        winner.textContent = "Victory! Man defeats AI and saves the world from being controlled by machines";
-    }
-    if(aiScore == 5 || manScore == 5){
-        playAgain.style.display = 'block';
-    }
+
+btns.forEach((button)=> {
+    button.addEventListener('click', () => {
+        let manScore = +manScoreEle.textContent;
+        let aiScore = +aiScoreEle.textContent;
+        const aiChoice = compPlay();
+        const manChoice = button.id;
+        let score = play(manChoice, aiChoice);
+        
+        if(score === 0){
+            roundWin.textContent = "It's a tie";
+        }
+        else if(score === 1){
+            roundWin.textContent = `Congo! You win this round, ${manChoice} beats ${aiChoice}.`;
+            manScore +=1;
+            manScoreEle.textContent = manScore;
+        }
+        else{
+            roundWin.textContent = `Alas! You lost this round, ${aiChoice} beats ${manChoice}`;
+            aiScore += 1;
+            aiScoreEle.textContent = aiScore;
+        }
+
+
+        if(aiScore == 5){
+            winner.textContent = "Defeat! AI wins the war over humanity and starts ruling the world";
+        }
+        if(manScore == 5){
+            winner.textContent = "Victory! Man defeats AI and saves the world from being controlled by machines";
+        }
+        if(aiScore == 5 || manScore == 5){
+            playAgain.style.display = 'block';
+            for(let i = 0; i < btns.length; i++){
+                btns[i].disabled = true;
+            }
+        }
+
+    });
 });
 
-paper.addEventListener('click',()=>{
-    winner.textContent  = "";
-
-    let manScore = +manScoreEle.textContent;
-    let aiScore = +aiScoreEle.textContent;
-
-    let rand = Math.floor(Math.random()*3);
-    const aiChoice = ar[rand];
-
-    if(aiChoice == "Paper") roundWin.textContent = "It's a tie";
-    else if(aiChoice == "Scissor"){
-        roundWin.textContent = "Alas! You lost this round";
-        aiScore += 1;
-        aiScoreEle.textContent = aiScore;
-    } 
-    else{
-        roundWin.textContent = "Congo! You win this round";
-        manScore +=1;
-        manScoreEle.textContent = manScore;
-    }
-
-    if(aiScore == 5){
-        winner.textContent = "Defeat! AI wins the war over humanity and starts ruling the world";
-    }
-    if(manScore == 5){
-        winner.textContent = "Victory! Man defeats AI and saves the world from being controlled by machines";
-    }
-    if(aiScore == 5 || manScore == 5){
-        playAgain.style.display = 'block';
-    }
-});
-
-scissor.addEventListener('click',()=>{
-    winner.textContent  = "";
-
-    let manScore = +manScoreEle.textContent;
-    let aiScore = +aiScoreEle.textContent;
-
-    let rand = Math.floor(Math.random()*3);
-    const aiChoice = ar[rand];
-
-    if(aiChoice == "Scissor") roundWin.textContent = "It's a tie";
-    else if(aiChoice == "Rock"){
-        roundWin.textContent = "Alas! You lost this round";
-        aiScore += 1;
-        aiScoreEle.textContent = aiScore;
-    } 
-    else{
-        roundWin.textContent = "Congo! You win this round";
-        manScore +=1;
-        manScoreEle.textContent = manScore;
-    }
-
-    if(aiScore == 5){
-        winner.textContent = "Defeat! AI wins the war over humanity and starts ruling the world";
-    }
-    if(manScore == 5){
-        winner.textContent = "Victory! Man defeats AI and saves the world from being controlled by machines";
-    }
-    if(aiScore == 5 || manScore == 5){
-        playAgain.style.display = 'block';
-    }
-});
 
 playAgain.addEventListener('click',()=>{
     window.location.reload();
